@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
 
@@ -29,3 +31,11 @@ jobs:
         with:
           name: TargetClicker-apk
           path: app/build/outputs/apk/debug/*.apk
+
+      - name: Publish APK as release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: TargetClicker APK
+          make_latest: true
+          files: app/build/outputs/apk/debug/app-debug.apk
